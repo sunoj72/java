@@ -1,62 +1,53 @@
 package suno.blockchain.core;
 
+import java.util.ArrayList;
+
 import suno.blockchain.util.Util;
 
 public class Block {
-  private int nonce;
   private int blockID;
-  private String data;
+  private String prevBlockHash;
+  private int nonce;
+  private ArrayList<Transaction> txList;
 
-  public Block(int blockID, int nonce, String data) {
+
+  public Block(int blockID, String prevBlockHash, int nonce, ArrayList<Transaction> txList) {
     this.blockID = blockID;
+    this.prevBlockHash = prevBlockHash;
     this.nonce = nonce;
-    this.data = data;
+    this.txList = txList;
   }
 
-  /**
-   * @return the blockID
-   */
   public int getBlockID() {
     return blockID;
   }
-
-  /**
-   * @param blockID the blockID to set
-   */
   public void setBlockID(int blockID) {
     this.blockID = blockID;
   }
-
-  /**
-   * @return the nonce
-   */
   public int getNonce() {
     return nonce;
   }
-
-  /**
-   * @param nonce the nonce to set
-   */
   public void setNonce(int nonce) {
     this.nonce = nonce;
   }
-
-  /**
-   * @return the data
-   */
-  public String getData() {
-    return data;
+  public String getPrevBlockHash() {
+	  return prevBlockHash;
+  }
+  public void setPrevBlockHash(String prevBlockHash) {
+	  this.prevBlockHash = prevBlockHash;
   }
 
-  /**
-   * @param data the data to set
-   */
-  public void setData(String data) {
-    this.data = data;
+  public void addTransaction(Transaction tx) {
+    txList.add(tx);
   }
 
   public String getBlockHash() {
-    return Util.getHash(nonce + data);
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < txList.size(); i++) {
+      sb.append(txList.get(i).getInformation());
+    }
+
+    return Util.getHash(nonce + sb.toString() + prevBlockHash);
   }
 
   public void mine() {
@@ -70,11 +61,15 @@ public class Block {
     }
   }
 
-  public void getInformation() {
+  public void showInformation() {
     System.out.println("--------------------------------------");
     System.out.println("블록 번호: " + getBlockID());
+    System.out.println("이전 해시: " + getPrevBlockHash());
     System.out.println("채굴 변수 값: " + getNonce());
-    System.out.println("블록 데이터: " + getData());
+    System.out.println("트랜젝션 개수: " + txList.size() + "개");
+    for(int i = 0; i < txList.size(); i++) {
+      System.out.println(txList.get(i).getInformation());
+    }
     System.out.println("블록 해시: " + getBlockHash());
     System.out.println("--------------------------------------");
   }
