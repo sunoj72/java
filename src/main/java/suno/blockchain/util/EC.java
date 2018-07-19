@@ -20,7 +20,7 @@ import javax.xml.bind.DatatypeConverter;
 public class EC {
   public void generate(String privateKeyName, String publicKeyName) throws Exception {
     KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-    generator.initialize(1024);
+    generator.initialize(2048);
 
     KeyPair kp = generator.generateKeyPair();
     System.out.println("One key pair was created.");
@@ -35,14 +35,14 @@ public class EC {
   private void writePemFile(Key key, String desc, String filename) throws FileNotFoundException, IOException {
     Pem pemFile = new Pem(key, desc);
     pemFile.write(filename);
-    System.out.println(String.format("RSA 암호키 %s을(를) %s 파일로 내보냈습니다.", desc, filename));
+    System.out.println(String.format("RSA CryptoKey exported %s -> %s", desc, filename));
   }
 
   public PrivateKey readPrivateKeyFromFile(String privateKeyFile)
     throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 
     String data = readString(privateKeyFile);
-    System.out.println("RSA 개인키를 " + privateKeyFile + "로부터 불러왔습니다.");
+    System.out.println("RSA PrivateKey loaded: " + privateKeyFile);
     System.out.println(data);
     // data = data.replace("-----BEGIN RSA PRIVATE KEY-----\n", "");
     // data = data.replace("\n-----END RSA PRIVATE KEY-----\n", "");
@@ -59,7 +59,7 @@ public class EC {
     throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 
     String data = readString(publicKeyFile);
-    System.out.println("RSA 공개키를 " + publicKeyFile + "로부터 불러왔습니다.");
+    System.out.println("RSA PublicKey loaded: " + publicKeyFile);
     System.out.println(data);
     // data = data.replace("-----BEGIN RSA PUBLIC KEY-----\n", "");
     // data = data.replace("\n-----END RSA PUBLIC KEY-----\n", "");

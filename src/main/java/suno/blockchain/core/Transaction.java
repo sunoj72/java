@@ -51,11 +51,11 @@ public class Transaction {
     this.timestamp = timestamp;
   }
 
-
   public String getData() {
-    return Util.getHash(sender.toString()) + " -> " +
-      Util.getHash(receiver.toString()) + " : " +
-      amount + " " + timestamp;
+    return String.format("%s -> %s : %f (%s)",
+      Util.getHash(sender.toString()),
+      Util.getHash(receiver.toString()),
+      amount, timestamp);
   }
 
   public String getInformation() {

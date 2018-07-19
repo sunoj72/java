@@ -1,7 +1,6 @@
 package suno;
 
 // import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import suno.blockchain.core.Block;
@@ -12,15 +11,9 @@ import suno.blockchain.util.EC;
 import static org.junit.Assert.*;
 
 import java.math.BigInteger;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.Security;
-import java.security.Signature;
-import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
+
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Unit test for simple App.
@@ -139,10 +132,10 @@ public class AppTest {
   @Test
   public void testLesson09() throws Exception {
     // Security.addProvider(new BouncyCastleProvider());
-    // EC ec = new EC();
-    // ec.generate("private1.pem", "public1.pem");
-    // ec.generate("private2.pem", "public2.pem");
-    // ec.generate("private3.pem", "public3.pem");
+    EC ec = new EC();
+    ec.generate("private1.pem", "public1.pem");
+    ec.generate("private2.pem", "public2.pem");
+    ec.generate("private3.pem", "public3.pem");
 
     assertTrue(true);
   }
@@ -184,5 +177,10 @@ public class AppTest {
 
   @Test
   public void testLesson11() throws Exception {
+    String sign1 = "7C9CDAF8E5E6408213530EBF8A0263350507BD9FEC67690D87C3D5C36844262AC5077E51984BB641C43919471B7B984F5120198F208DFCFD68F5B2761E6A5F6ACB68BB45BADC9916A00CB5C7D75F7B534E50BBB82D878B47686B9F2F63AEA04B44F37474CE6E99EDF4CAD305F3D4CCC2CBAB23348F6B5AF03F0F43CDCAA8F59A";
+    String sign2 = "FB210F352D279B46C7027869A24BD9C34CB24C84150049B330694620597689C4E0E6D66DF0DE6625866AAFB001513E83B4708EC8A2FF7378AD2C1454C67EDEBD4D0847C3C2FA50EFA4785E500CF07F933A6E20B02B7BE0128F6C27057AE832F8E358B6D6811D6F73DB9099E920FD3464A1EC86E569B56DF98248AA888EEB4A97";
+    byte[] ss = (new BigInteger(sign1, 16)).toByteArray();
+    byte[] bb = (DatatypeConverter.parseHexBinary(sign2));
+    System.out.println(ss.length + ", " + bb.length);
   }
 }

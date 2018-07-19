@@ -1,8 +1,9 @@
 package suno.blockchain.core;
 
-import java.math.BigInteger;
 import java.security.Signature;
 import java.util.ArrayList;
+
+import javax.xml.bind.DatatypeConverter;
 
 import suno.blockchain.util.Util;
 
@@ -54,7 +55,9 @@ public class Block {
     signature = Signature.getInstance(ALGORITHM);
     signature.initVerify(tx.getSender());
     signature.update(baText);
-    return signature.verify(new BigInteger(tx.getSignature(), 16).toByteArray());
+    byte[] baSignature = DatatypeConverter.parseHexBinary(tx.getSignature());
+
+    return signature.verify(baSignature);
   }
 
   public void addTransaction(Transaction tx) throws Exception {

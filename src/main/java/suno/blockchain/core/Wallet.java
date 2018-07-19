@@ -1,9 +1,10 @@
 package suno.blockchain.core;
 
-import java.math.BigInteger;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+
+import javax.xml.bind.DatatypeConverter;
 
 import suno.blockchain.util.EC;
 
@@ -32,8 +33,6 @@ public class Wallet {
     byte[] baText = data.getBytes();
     signature.update(baText);
     byte[] baSignature = signature.sign();
-
-    System.out.println("Sign: " + baSignature.length);
-    return (new BigInteger(1, baSignature).toString(16).toUpperCase());
+    return DatatypeConverter.printHexBinary(baSignature);
   }
 }
