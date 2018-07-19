@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import socket.controller.ClientHandler;
 
@@ -44,7 +45,7 @@ public class ChatServer {
 			Thread thread = new Thread(handler);
 			thread.start();
 		}
-  }
+	}
 
   public static void main(String[] args) throws IOException {
       new ChatServer().startServer();

@@ -22,8 +22,7 @@ public class ClientHandler implements Runnable {
 	public void run() {
 		try {
 			inputStream = new Scanner(client.getInputStream());
-			while(true)
-			{
+			while (true) {
 				if(!inputStream.hasNext())
 					return;
 				String msg = inputStream.nextLine();
@@ -35,8 +34,7 @@ public class ClientHandler implements Runnable {
   }
 
 	public synchronized void processMessage(Socket client, String msg) throws IOException {
-    if( !client.isClosed() )
-    {
+    if (!client.isClosed()) {
       PrintWriter pw = new PrintWriter(client.getOutputStream());
       pw.println(msg);
       pw.flush();
@@ -45,17 +43,15 @@ public class ClientHandler implements Runnable {
   }
 
 	public synchronized void sendMessageToAll(String msg) throws IOException {
-		for(Iterator<Socket> it = server.getClients().iterator(); it.hasNext();)
-		{
+		for(Iterator<Socket> it = server.getClients().iterator(); it.hasNext();) {
       Socket client = it.next();
 
-			if (!client.isClosed())
-			{
+			if (!client.isClosed()) {
 				PrintWriter pw = new PrintWriter(client.getOutputStream());
 				pw.println(msg);
 				pw.flush();
-				//System.out.println("Sent to: " + client.getRemoteSocketAddress());
-			}
+				System.out.println("Sent to: " + client.getRemoteSocketAddress());
+	}
 		}
 	}
 

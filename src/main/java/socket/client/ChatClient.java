@@ -8,23 +8,20 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class ChatClient implements Runnable {
-  // why is the ChatClient Multi-threaded?
-	private Socket link;
+	private Socket client;
 	private PrintWriter outputStream;
 	private Scanner inputStream;
+	private String addr = "localhost";
 	private int port = 7777;
 	private String nick;
 
-	public ChatClient() throws IOException {
-		initialize();
+	public ChatClient(String addr, int port) throws IOException {
+    this.addr = addr;
+    this.port = port;
 	}
 
-	private void initialize() throws IOException {
-		// get server address
+	private void connect() throws IOException {
 		Scanner keyboard = new Scanner(System.in);
-		System.out.println("What is the chat server's ip address?");
-		String str = keyboard.next();
-
 		// get user nick
 		System.out.println("What is your nick?");
 		nick = keyboard.next();
@@ -32,23 +29,24 @@ public class ChatClient implements Runnable {
 		// connect to server
 		InetAddress host = null;
 		try {
-			host = InetAddress.getByName(str);
+			host = InetAddress.getByName(this.addr);
 		} catch (UnknownHostException e1) {
 			System.out.println("Host not found");
 		}
 		System.out
 				.println("You are now connected to: " + host.getHostAddress());
 
-		link = null;
+		client = null;
 		try {
-			link = new Socket(host, port);
-			link.setReuseAddress(true);
+			client = new Socket(host, port);
+			client.setReuseAddress(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("not found");
 		}
-		inputStream = new Scanner(link.getInputStream());
-		outputStream = new PrintWriter(link.getOutputStream());
+
+		inputStream = new Scanner(client.getInputStream());
+		outputStream = new PrintWriter(client.getOutputStream());
 
 		// start new thread to listen from server
 		// one runnable, two threads... in which cases is this legal?
@@ -61,10 +59,16 @@ public class ChatClient implements Runnable {
 			outputStream.println(nick + " says: " + msg);
 			outputStream.flush();
 		}
+
+		System.out.println("Clients closed..");
+		keyboard.close();
+		client.close();
+		System.exit(0);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new ChatClient();
+    ChatClient client = new ChatClient(args[0], Integer.parseInt(args[1]));
+    client.connect();
 	}
 
 	@Override
