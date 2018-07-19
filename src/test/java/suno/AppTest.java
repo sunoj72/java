@@ -1,6 +1,6 @@
 package suno;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+// import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -138,18 +138,18 @@ public class AppTest {
 
   @Test
   public void testLesson09() throws Exception {
-    Security.addProvider(new BouncyCastleProvider());
-    EC ec = new EC();
-    ec.generate("private1.pem", "public1.pem");
-    ec.generate("private2.pem", "public2.pem");
-    ec.generate("private3.pem", "public3.pem");
+    // Security.addProvider(new BouncyCastleProvider());
+    // EC ec = new EC();
+    // ec.generate("private1.pem", "public1.pem");
+    // ec.generate("private2.pem", "public2.pem");
+    // ec.generate("private3.pem", "public3.pem");
 
     assertTrue(true);
   }
 
   @Test
   public void testLesson10() throws Exception {
-    Security.addProvider(new BouncyCastleProvider());
+    // Security.addProvider(new BouncyCastleProvider());
     Wallet wallet1 = new Wallet();
     wallet1.setFromFile("private1.pem", "public1.pem");
     Wallet wallet2 = new Wallet();
@@ -162,19 +162,27 @@ public class AppTest {
     block1.showInformation();
 
     Block block2 = new Block(2, block1.getBlockHash(), 0, new ArrayList<Transaction>());
-    Transaction tx1 = new Transaction(wallet1, wallet2.getPublicKey(), 1.5, "2018-05-03 23:05:19.5");
-    Transaction tx2 = new Transaction(wallet2, wallet3.getPublicKey(), 3.7, "2018-05-04 14:12:09.5");
+    Transaction tx1 = new Transaction(wallet2, wallet3.getPublicKey(), 1.5, "2018-05-03 23:05:19.5");
+    Transaction tx2 = new Transaction(wallet1, wallet2.getPublicKey(), 3.7, "2018-05-04 14:12:09.5");
+    Transaction tx3 = new Transaction(wallet3, wallet1.getPublicKey(), 0.5, "2018-05-03 23:15:19.5");
     block2.addTransaction(tx1);
     block2.addTransaction(tx2);
+    block2.addTransaction(tx3);
     block2.mine();
     block2.showInformation();
 
     Block block3 = new Block(3, block2.getBlockHash(), 0, new ArrayList<Transaction>());
-    Transaction tx3 = new Transaction(wallet1, wallet3.getPublicKey(), 2.3, "2018-05-06 17:09:21.5");
-    Transaction tx4 = new Transaction(wallet2, wallet3.getPublicKey(), 1.4, "2018-05-07 02:11:19.5");
-    block3.addTransaction(tx3);
+    Transaction tx4 = new Transaction(wallet1, wallet3.getPublicKey(), 2.3, "2018-05-06 17:09:21.5");
+    Transaction tx5 = new Transaction(wallet3, wallet2.getPublicKey(), 1.4, "2018-05-07 02:11:19.5");
+    Transaction tx6 = new Transaction(wallet2, wallet1.getPublicKey(), 10.2, "2018-05-07 02:17:19.5");
     block3.addTransaction(tx4);
+    block3.addTransaction(tx5);
+    block3.addTransaction(tx6);
     block3.mine();
     block3.showInformation();
+  }
+
+  @Test
+  public void testLesson11() throws Exception {
   }
 }

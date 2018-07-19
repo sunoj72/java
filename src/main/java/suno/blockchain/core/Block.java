@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import suno.blockchain.util.Util;
 
 public class Block {
-  private static final String ALGORITHM = "SHA1withECDSA";
+  private static final String ALGORITHM = "SHA1withRSA";
 
   private int blockID;
   private String prevBlockHash;
+  // private String merkleHash;
   private int nonce;
   private ArrayList<Transaction> txList;
 
@@ -39,14 +40,20 @@ public class Block {
   public void setPrevBlockHash(String prevBlockHash) {
 	  this.prevBlockHash = prevBlockHash;
   }
+  // public String getMerkleHash() {
+  //   return merkleHash;
+  // }
+  // public void setMerkleHash(String merkleHash) {
+  //   this.merkleHash = merkleHash;
+  // }
 
   public boolean verifyTransaction(Transaction tx) throws Exception {
     Signature signature;
+    byte[] baText = tx.getData().getBytes();
+
     signature = Signature.getInstance(ALGORITHM);
-    byte[] baText = tx.getData().getBytes("UTF-8");
     signature.initVerify(tx.getSender());
     signature.update(baText);
-
     return signature.verify(new BigInteger(tx.getSignature(), 16).toByteArray());
   }
 

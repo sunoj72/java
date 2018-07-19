@@ -1,27 +1,35 @@
 package suno.blockchain.util;
 
+import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.security.Key;
 
-import org.bouncycastle.util.io.pem.PemObject;
-import org.bouncycastle.util.io.pem.PemWriter;
+import javax.xml.bind.DatatypeConverter;
 
 public class Pem {
-  private PemObject pemObject;
+  private Key key;
+  private String desc;
 
-  public Pem (Key key, String desc) {
-    this.pemObject = new PemObject(desc, key.getEncoded());
+  public Pem(Key key, String desc) {
+    this.key = key;
+    this.desc = desc;
   }
 
   public void write(String filename) throws FileNotFoundException, IOException {
-    PemWriter pemWriter = new PemWriter(new OutputStreamWriter(new FileOutputStream(filename)));
+    BufferedOutputStream bos = null;
+
     try {
-      pemWriter.writeObject(this.pemObject);
+      bos = new BufferedOutputStream(new FileOutputStream(filename));
+      byte[] decoded = DatatypeConverter.printBase64Binary(key.getEncoded()).getBytes();
+      // bos.write(String.format("-----BEGIN %s-----\n", this.desc).getBytes());
+      bos.write(decoded);
+      // bos.write(String.format("\n-----END %s-----\n", this.desc).getBytes());
     } finally {
-      pemWriter.close();
+      if (bos != null) {
+        bos.close();
+      }
     }
   }
 }

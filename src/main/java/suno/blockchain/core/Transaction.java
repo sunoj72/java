@@ -53,14 +53,13 @@ public class Transaction {
 
 
   public String getData() {
-    return String.format("%s -> %s : %5.5f (%s)",
-      Util.getHash(sender.toString()),
-      Util.getHash(receiver.toString()),
-      amount, timestamp);
+    return Util.getHash(sender.toString()) + " -> " +
+      Util.getHash(receiver.toString()) + " : " +
+      amount + " " + timestamp;
   }
 
   public String getInformation() {
-    return String.format("<%s>\n%s -> %s : %5.5f (%s)",
+    return String.format("<%s>\n%s -> %s : %f (%s)",
       this.signature,
       Util.getHash(sender.toString()),
       Util.getHash(receiver.toString()),

@@ -11,22 +11,16 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.spec.ECGenParameterSpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import org.bouncycastle.util.encoders.Base64;
+import javax.xml.bind.DatatypeConverter;
 
 public class EC {
-  private final String ALGORITHM = "sect163k1";
-
   public void generate(String privateKeyName, String publicKeyName) throws Exception {
-    KeyPairGenerator generator = KeyPairGenerator.getInstance("ECDSA", "BC");
-    ECGenParameterSpec ecsp = new ECGenParameterSpec(ALGORITHM);
-
-    generator.initialize(ecsp, new SecureRandom());
+    KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+    generator.initialize(1024);
 
     KeyPair kp = generator.generateKeyPair();
     System.out.println("One key pair was created.");
@@ -34,29 +28,28 @@ public class EC {
     PrivateKey priv = kp.getPrivate();
     PublicKey pub = kp.getPublic();
 
-    writePemFile(priv, "EC PRIVATE KEY", privateKeyName);
-    writePemFile(pub, "EC PUBLIC KEY", publicKeyName);
+    writePemFile(priv, "RSA PRIVATE KEY", privateKeyName);
+    writePemFile(pub, "RSA PUBLIC KEY", publicKeyName);
   }
 
   private void writePemFile(Key key, String desc, String filename) throws FileNotFoundException, IOException {
     Pem pemFile = new Pem(key, desc);
     pemFile.write(filename);
-    System.out.println(String.format("EC 암호키 %s을(를) %s 파일로 내보냈습니다.", desc, filename));
+    System.out.println(String.format("RSA 암호키 %s을(를) %s 파일로 내보냈습니다.", desc, filename));
   }
 
   public PrivateKey readPrivateKeyFromFile(String privateKeyFile)
     throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 
     String data = readString(privateKeyFile);
-    System.out.println("EC 개인키를 " + privateKeyFile + "로부터 불러왔습니다.");
+    System.out.println("RSA 개인키를 " + privateKeyFile + "로부터 불러왔습니다.");
     System.out.println(data);
+    // data = data.replace("-----BEGIN RSA PRIVATE KEY-----\n", "");
+    // data = data.replace("\n-----END RSA PRIVATE KEY-----\n", "");
 
-    data = data.replace("-----BEGIN EC PRIVATE KEY-----", "");
-    data = data.replace("-----END EC PRIVATE KEY-----", "");
-
-    byte[] decoded = Base64.decode(data);
+    byte[] decoded = DatatypeConverter.parseBase64Binary(data);
     PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decoded);
-    KeyFactory factory = KeyFactory.getInstance("ECDSA");
+    KeyFactory factory = KeyFactory.getInstance("RSA");
     PrivateKey key = factory.generatePrivate(spec);
 
     return key;
@@ -66,15 +59,14 @@ public class EC {
     throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 
     String data = readString(publicKeyFile);
-    System.out.println("EC 공개키를 " + publicKeyFile + "로부터 불러왔습니다.");
+    System.out.println("RSA 공개키를 " + publicKeyFile + "로부터 불러왔습니다.");
     System.out.println(data);
+    // data = data.replace("-----BEGIN RSA PUBLIC KEY-----\n", "");
+    // data = data.replace("\n-----END RSA PUBLIC KEY-----\n", "");
 
-    data = data.replace("-----BEGIN EC PUBLIC KEY-----", "");
-    data = data.replace("-----END EC PUBLIC KEY-----", "");
-
-    byte[] decoded = Base64.decode(data);
+    byte[] decoded = DatatypeConverter.parseBase64Binary(data);
     X509EncodedKeySpec spec = new X509EncodedKeySpec(decoded);
-    KeyFactory factory = KeyFactory.getInstance("ECDSA");
+    KeyFactory factory = KeyFactory.getInstance("RSA");
     PublicKey key = factory.generatePublic(spec);
 
     return key;
@@ -87,10 +79,12 @@ public class EC {
     BufferedReader br = new BufferedReader(new FileReader(filename));
 
     while ((line = br.readLine()) != null) {
-      pem += line + "\n";
+      pem += line;
     }
+
     br.close();
 
+    pem.trim();
     return pem;
   }
 }
