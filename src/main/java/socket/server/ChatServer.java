@@ -1,17 +1,19 @@
-package suno.blockchain.app;
+package socket.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class BlockchainServer {
-  private static final int PORT = 1234;
+import socket.controller.ClientHandler;
+
+public class ChatServer {
+  private static final int PORT = 7777;
 
   private ServerSocket server;
   private ArrayList<Socket> clients;
 
-  public BlockchainServer() {
+  public ChatServer() {
 		try {
 			server = new ServerSocket(PORT);
 			server.setReuseAddress(true);
@@ -36,14 +38,15 @@ public class BlockchainServer {
 			Socket client = server.accept();
 			clients.add(client);
 			System.out.println("New client accepted..." + client.getRemoteSocketAddress());
-			System.out.println("Total sessions: " + clients.size());
-			BlockchainClientHandler handler = new BlockchainClientHandler(client, this);
+      System.out.println("Total Users: " + clients.size());
+
+			ClientHandler handler = new ClientHandler(client, this);
 			Thread thread = new Thread(handler);
 			thread.start();
 		}
   }
 
   public static void main(String[] args) throws IOException {
-      new BlockchainServer().startServer();
+      new ChatServer().startServer();
   }
 }

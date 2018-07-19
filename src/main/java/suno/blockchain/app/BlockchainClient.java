@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 
 public class BlockchainClient {
   private static final String IP = "localhost";
-  private static final int PORT = 1234;
+  private static final int PORT = 7777;
 
   private static final String MSG_GET_BLOCK_LIST = "BLOCK_LIST";
   private static final String MSG_ADD_TRANSACTION = "TX";
@@ -20,7 +20,7 @@ public class BlockchainClient {
     try {
       System.out.print(sendBlockList());
       System.out.print(sendTransaction());
-
+      System.exit(0);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -38,9 +38,11 @@ public class BlockchainClient {
       writer.write(MSG_GET_BLOCK_LIST);
       writer.flush();
       reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-      while ((buf = reader.readLine()) != null) {
-        sb.append(buf);
-      }
+      buf = reader.readLine();
+      sb.append(buf);
+      // while ((buf = reader.readLine()) != null) {
+      //   sb.append(buf);
+      // }
     } catch (UnknownHostException e) {
       System.err.println("Don't know about host");
     } catch (IOException e) {
