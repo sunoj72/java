@@ -1,11 +1,14 @@
 package socket.client;
 
 import java.io.IOException;
+import java.lang.IllegalArgumentException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+
+import javax.print.attribute.standard.Finishings;
 
 import socket.model.Message;
 import socket.util.MessageBuilder;
@@ -57,10 +60,14 @@ public class NetworkClient implements Runnable {
 	}
 
 	private void stopThread() {
-		thread.stop();
+		thread.interrupt();
 	}
 
-	public synchronized void sendMessage(String msg) throws IOException {
+	public synchronized void sendMessage(String msg) throws IOException, IllegalArgumentException {
+		if (msg == null || msg.length() == 0) {
+			throw new IllegalArgumentException();
+		}
+
 		if (!this.client.isClosed()) {
 			PrintWriter pw = new PrintWriter(this.client.getOutputStream());
 			pw.println(msg);
@@ -69,8 +76,12 @@ public class NetworkClient implements Runnable {
 		}
 	}
 
-	public synchronized void sendMessage(Message msg) throws IOException {
-		sendMessage(msg.toString());
+	public synchronized void sendMessage(Message msg) throws IOException, IllegalArgumentException {
+		if (msg != null) {
+			sendMessage(msg.toString());
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public synchronized Message readMessage() throws IOException {
@@ -86,12 +97,12 @@ public class NetworkClient implements Runnable {
 		}
 	}
 
-	public synchronized Message sendMessagewithResponse(String msg) throws IOException {
+	public synchronized Message sendMessagewithResponse(String msg) throws IOException, IllegalArgumentException {
 		this.sendMessage(msg);
 		return this.readMessage();
 	}
 
-	public synchronized Message sendMessagewithResponse(Message msg) throws IOException {
+	public synchronized Message sendMessagewithResponse(Message msg) throws IOException, IllegalArgumentException {
 		this.sendMessage(msg);
 		return this.readMessage();
 	}
@@ -110,18 +121,23 @@ public class NetworkClient implements Runnable {
 		networkClient.startThread();
 
 		Message request = MessageBuilder.build(requestMessage);
-		networkClient.sendMessage(request);
 
-		//TODO: process response Message
-		// Message resp = networkClient.readMessage();
+		try {
+			networkClient.sendMessage(request);
 
+			Thread.sleep(1000);
 
-		Thread.sleep(5000);
+			//TODO: process response Message
+			// Message resp = networkClient.readMessage();
 
-		networkClient.stopThread();
-		networkClient.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			networkClient.stopThread();
+			networkClient.close();
 
-		System.exit(0);
+			System.exit(0);
+		}
 	}
 
 	@Override
