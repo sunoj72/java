@@ -8,13 +8,13 @@ import java.util.Iterator;
 
 import socket.controller.ClientHandler;
 
-public class ChatServer {
+public class NetworkServer {
   private static final int PORT = 7777;
 
   private ServerSocket server;
   private ArrayList<Socket> clients;
 
-  public ChatServer() {
+  public NetworkServer() {
 		try {
 			server = new ServerSocket(PORT);
 			server.setReuseAddress(true);
@@ -48,6 +48,6 @@ public class ChatServer {
 	}
 
   public static void main(String[] args) throws IOException {
-      new ChatServer().startServer();
+      new NetworkServer().startServer();
   }
 }
