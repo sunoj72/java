@@ -194,13 +194,13 @@ public class Console extends Thread {
 			}
 		}
 
-		Console.error("잘못 된 명령입니다.");
+		Console.error("잘못된 명령입니다.");
 		mCanRead = true;
 	}
 
 	private boolean isCmdError(String[] cmd, int argc) {
 		if (cmd.length < argc) {
-			//Console.error("잘못 된 명령입니다.");
+			//Console.error("잘못된 명령입니다.");
 			return true;
 		}
 

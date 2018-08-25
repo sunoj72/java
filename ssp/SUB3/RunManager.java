@@ -22,7 +22,7 @@ public class RunManager {
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 
 		while ((buf = br.readLine()) != null) {
-			String[] tokens = buf.split("#");
+			String[] tokens = buf.trim().split("#");
 
 			if (!map.containsKey(tokens[1])) {
 				map.put(tokens[1], 0);

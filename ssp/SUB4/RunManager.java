@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +22,10 @@ public class RunManager {
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 
 		while ((buf = br.readLine()) != null) {
-			String[] tokens = buf.split("#");
+			String[] tokens = buf.trim().split("#");
 
 			if (!map.containsKey(tokens[1])) {
+				Files.deleteIfExists(Paths.get(String.format("%s%s.TXT", "TYPELOG_4_", tokens[1])));
 				map.put(tokens[1], 0);
 			}
 
