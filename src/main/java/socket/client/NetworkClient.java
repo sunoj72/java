@@ -8,15 +8,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-import javax.print.attribute.standard.Finishings;
-
 import socket.model.Message;
 import socket.util.MessageBuilder;
 // import socket.controller.MessageHandler;
 // import socket.controller.ClientSideMessageHandler;
 
 public class NetworkClient implements Runnable {
-// public class NetworkClient {
 	// private MessageHandler messageHandler;
 	private Thread thread = null;
 	private Socket client;
@@ -25,11 +22,12 @@ public class NetworkClient implements Runnable {
 
 	public NetworkClient(String addr, int port) throws IOException {
 		// this.messageHandler = new ClientSideMessageHandler();
+
     this.addr = addr;
     this.port = port;
 	}
 
-	private void connect() throws IOException {
+	public void connect() throws IOException {
 		// connect to server
 		InetAddress host = null;
 		try {
@@ -49,18 +47,20 @@ public class NetworkClient implements Runnable {
 		}
 	}
 
-	private void close() throws IOException {
+	public void close() throws IOException {
 		client.close();
 		System.out.println("Clients closed..");
 	}
 
-	private void startThread() {
+	public void startThread() {
 		thread = new Thread(this);
 		thread.start();
 	}
 
-	private void stopThread() {
-		thread.interrupt();
+	public void stopThread() {
+    if (thread != null) {
+      thread.interrupt();
+    }
 	}
 
 	public synchronized void sendMessage(String msg) throws IOException, IllegalArgumentException {
@@ -92,6 +92,7 @@ public class NetworkClient implements Runnable {
 				String line = inputStream.nextLine();
 				Message response = MessageBuilder.build(line);
 				System.out.println(String.format("Received: [%s]", line));
+				inputStream.close();
 				return response;
 			}
 		}
@@ -107,39 +108,6 @@ public class NetworkClient implements Runnable {
 		return this.readMessage();
 	}
 
-	public static void main(String[] args) throws Exception {
-    NetworkClient networkClient = new NetworkClient(args[0], Integer.parseInt(args[1]));
-		networkClient.connect();
-
-		//TODO: process request Message
-		String requestMessage = "CMD1#hello";
-
-		if (args.length > 2) {
-			requestMessage = args[2];
-		}
-
-		networkClient.startThread();
-
-		Message request = MessageBuilder.build(requestMessage);
-
-		try {
-			networkClient.sendMessage(request);
-
-			Thread.sleep(1000);
-
-			//TODO: process response Message
-			// Message resp = networkClient.readMessage();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			networkClient.stopThread();
-			networkClient.close();
-
-			System.exit(0);
-		}
-	}
-
 	@Override
 	public void run() {
 		try {
@@ -152,8 +120,5 @@ public class NetworkClient implements Runnable {
 		} catch (IOException e) {
 			System.out.println(e.getStackTrace());
 		}
-
-
 	}
-
 }
