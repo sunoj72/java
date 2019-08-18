@@ -1,1 +1,1 @@
-java -classpath . RunManager
+java -classpath bin RunManager
