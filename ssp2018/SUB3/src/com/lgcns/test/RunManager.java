@@ -23,17 +23,17 @@ public class RunManager {
 		scan.close();
 
 		try {
-			filename = PathUtil.matchFirst("glob:**" + File.separator + filename, FileSystems.getDefault().getPath(DATA_PATH, "").toString());			
+			filename = PathUtil.matchFirst("glob:**" + File.separator + filename, FileSystems.getDefault().getPath(DATA_PATH, "").toString());
 
 			File inFile = new File(filename);
 			Compressor comp = new Compressor();
 			InputStream in = new BufferedInputStream(new FileInputStream(inFile));
 
-//			File outFile = FileSystems.getDefault().getPath("", filename).toFile();		
+//			File outFile = FileSystems.getDefault().getPath("", filename).toFile();
 //			OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile));
 			OutputStream out = new BufferedOutputStream(System.out);
 			comp.doLine3Compress(in, out);
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

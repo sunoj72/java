@@ -26,11 +26,11 @@ public class RunManager {
 			Compressor comp = new Compressor();
 			InputStream in = new BufferedInputStream(new FileInputStream(inFile));
 
-			File outFile = FileSystems.getDefault().getPath("", filename).toFile();		
+			File outFile = FileSystems.getDefault().getPath("", filename).toFile();
 			OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile));
 //			OutputStream out = new BufferedOutputStream(System.out);
 			comp.doLine2Compress(in, out);
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
