@@ -5,12 +5,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Iterator;
-import java.util.Scanner;
 
 public class ClientManager implements Runnable {
 	private NetworkServer server;
 	private Socket client;
-	private Scanner scanner;
 
 	public ClientManager(Socket client, NetworkServer server) {
 		this.server = server;
@@ -21,12 +19,10 @@ public class ClientManager implements Runnable {
 	public void run() {
 		try {
 			InputStream in = client.getInputStream();
-			scanner = new Scanner(in);
 
 			while (true) {
 				byte b[] = new byte[1024];
-                int read = 0;
-                if((read = in.read(b)) > 0)
+                if((in.read(b)) > 0)
                 {
     				String line = new String(b);
     				Message msg = MessageBuilder.buildRequest(line.trim());
