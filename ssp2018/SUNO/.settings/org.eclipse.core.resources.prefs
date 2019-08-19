@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/com/lgcns/suno/net/p2p/client/p2ppeer/Console.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/client/p2ppeer/Listener.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/client/p2ppeer/Main.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/client/packets/PacketHandler.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/client/peers/Peer.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/server/p2pserver/Console.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/server/p2pserver/Listener.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/server/packets/PacketHandler.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/server/peers/Peer.java=UTF-8
+encoding//src/com/lgcns/suno/net/p2p/server/peers/PeerManager.java=UTF-8

@@ -19,11 +19,15 @@ buildNumber.properties
 !.idea/runConfigurations/
 
 #
+# Eclipse
+#
+#.settings/
+#.classpath
+#.project
+
+#
 # Visual Studio Code
 #
-.settings/
-.classpath
-.project
 .vscode/
 
 *.pem
