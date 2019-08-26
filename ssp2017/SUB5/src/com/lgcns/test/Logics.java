@@ -164,6 +164,57 @@ public class Logics {
 			
 			//wait to all threads closed.
 			threadPool.shutdown();
+			while(true) {
+				if (threadPool.awaitTermination(100, TimeUnit.MILLISECONDS)) {
+					break;
+				}
+				
+				Thread.sleep(100);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void doProcess5(String filename, String inputPath, String report, String logPrefix, String outputPath, String execName, String execPath, int threadCount) {
+		HashMap<String, Integer> map = new HashMap<>();
+		ExecutorService threadPool = Executors.newFixedThreadPool(threadCount);
+		
+		BufferedReader br = PathUtil.getReader(filename, inputPath);
+		BufferedWriter bw = PathUtil.getWriter(report, outputPath);
+	
+		String msg = "";
+
+		try {
+			while ((msg = br.readLine()) != null) {
+				String[] tokens = msg.trim().split("#");
+
+				if (!map.containsKey(tokens[1])) {
+					// 기존 TPYE별 로그파일이 존재하면 삭제
+					Files.deleteIfExists(Paths.get(String.format("%s%s.TXT", logPrefix, tokens[1])));
+					map.put(tokens[1], 0);
+
+					// Execute Type Logs in ThreadPool(ExecutorService)
+					LogWriterRunnable runnaable = new LogWriterRunnable(filename, inputPath, logPrefix, outputPath, execName, execPath, tokens[1]);
+					threadPool.execute(runnaable);
+				}
+
+				// make report
+				map.put(tokens[1], map.get(tokens[1]) + 1) ;
+			}
+			br.close();
+
+			Map<String, Integer> sortedMap = getSortedMap(map);
+
+			for (Map.Entry<String, Integer> kv: sortedMap.entrySet()) {
+				bw.write(String.format("%s#%d\n", kv.getKey(), kv.getValue()));
+			}
+			bw.close();
+			
+			//wait to all threads closed.
+			threadPool.shutdown();
 			
 			int i = 0;
 			while(true) {
@@ -213,5 +264,4 @@ public class Logics {
 
 		return sortedMap;
 	}
-
 }

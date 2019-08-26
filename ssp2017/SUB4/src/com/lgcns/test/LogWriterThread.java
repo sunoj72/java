@@ -25,8 +25,12 @@ public class LogWriterThread  extends Thread {
 		logger = PathUtil.getWriter(String.format("%s%s.TXT", logPrefix, logType), outputPath, true);
 	}
 
+	@Override
 	public void run() {
 		String msg = "";
+		
+        String threadName = Thread.currentThread().getName();
+        System.out.println("Thread Name : " + threadName + " Start");
 		
 		try {
 			while ((msg = input.readLine()) != null) {
@@ -47,6 +51,8 @@ public class LogWriterThread  extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+        System.out.println("Thread Name : " + threadName + " End");
 		
 	}
 

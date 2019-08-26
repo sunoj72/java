@@ -2,11 +2,9 @@ package com.lgcns.suno.net.client;
 
 import java.io.IOException;
 
-import org.w3c.dom.UserDataHandler;
-
 import com.lgcns.suno.net.model.Message;
 import com.lgcns.suno.net.util.MessageBuilder;
-import com.lgcns.suno.net.util.Shell;
+import com.lgcns.suno.util.Shell;
 
 public class ClientApp {
   private NetworkClient client = null;
