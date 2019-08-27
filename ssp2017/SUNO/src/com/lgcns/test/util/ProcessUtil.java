@@ -1,9 +1,11 @@
-package com.lgcns.suno.util;
+package com.lgcns.test.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+
+import com.lgcns.test.thread.ProcessThread;
 
 public class ProcessUtil {
 	public static void execute() {
@@ -24,7 +26,11 @@ public class ProcessUtil {
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(ps.getInputStream()));
 		for (int i = 0; i < waitLines; i++) {
-			sb.append(in.readLine());
+			String line = in.readLine();
+			if (line == null) {
+				break;
+			}
+			sb.append(String.format("%s\n", line));
 		}
 		
 		ps.waitFor();
@@ -33,8 +39,10 @@ public class ProcessUtil {
 		return sb.toString();
 	}
 
-	public static void executeAndWait() {
+	public static ProcessThread executeWithThread(String name, List<String> exec) {
+		ProcessThread thread = new ProcessThread(name, exec);
+		thread.startThread();
 		
+		return thread;
 	}
-
 }

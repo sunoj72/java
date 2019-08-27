@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import com.lgcns.suno.util.PathUtil;
+import com.lgcns.test.util.PathUtil;
 
 public class LogWriterThread  extends Thread {
 	private String execName;

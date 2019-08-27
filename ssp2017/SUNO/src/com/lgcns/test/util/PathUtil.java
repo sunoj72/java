@@ -1,4 +1,4 @@
-package com.lgcns.suno.util;
+package com.lgcns.test.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -10,6 +10,10 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -74,7 +78,18 @@ public class PathUtil {
 		}
 
 		return br;
-	}	
+	}
+
+	public static BufferedReader getReader(InputStream in) {	
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(in));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return br;
+	}
 
 	public static BufferedWriter getWriter(String filename, String location) {	
 		return getWriter(filename, location, false);
@@ -91,7 +106,17 @@ public class PathUtil {
 
 		return bw;
 	}
-	
+
+	public static BufferedWriter getWriter(OutputStream out) {	
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new OutputStreamWriter(out));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return bw;
+	}
 	
 	public static BufferedInputStream getInputStream(String filename, String location) {
 		BufferedInputStream in = null;

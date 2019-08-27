@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.lgcns.suno.util.PathUtil;
+import com.lgcns.test.util.PathUtil;
 
 public class Logics {
 	public void doProcess1(String filename, String report, String inputPath, String outputPath) {

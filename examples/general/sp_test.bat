@@ -1,1 +1,0 @@
-java -classpath target/classes suno.blockchain.core.BlockChainStarter

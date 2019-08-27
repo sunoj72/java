@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.lgcns.suno.net.model.Message;
 import com.lgcns.suno.net.util.MessageBuilder;
-import com.lgcns.suno.util.Shell;
+import com.lgcns.test.util.Shell;
 
 public class ClientApp {
 	private NetworkClient client = null;

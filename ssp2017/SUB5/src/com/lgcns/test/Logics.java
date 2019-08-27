@@ -14,8 +14,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import com.lgcns.suno.util.PathUtil;
-import com.lgcns.suno.util.ProcessUtil;
+import com.lgcns.test.util.PathUtil;
+import com.lgcns.test.util.ProcessUtil;
 
 public class Logics {
 	public void doProcess1(String filename, String report, String inputPath, String outputPath) {
