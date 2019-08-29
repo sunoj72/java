@@ -12,15 +12,16 @@ import java.util.Scanner;
 import com.lgcns.suno.util.PathUtil;
 import com.lgcns.test.Compressor;
 import com.lgcns.test.RunManager;
+import com.lgcns.test.net.message.MessageHandler;
 
 public class ServerSideMessageHandler implements MessageHandler {
 	private String filename = "";
 	private Scanner scan = null;
 	private List<String> encrypted = null;
 	private int index = 0;
-	private Message resp = null;
+	private ServerMessage resp = null;
 
-	public synchronized Message processMessage(Message request) {
+	public synchronized ServerMessage processMessage(ServerMessage request) {
 		Compressor comp = new Compressor();
 		
 		switch (request.getCommand()) {
@@ -39,7 +40,7 @@ public class ServerSideMessageHandler implements MessageHandler {
 				System.err.println("Contents does not exists");
 				System.exit(-1);
 			}
-			resp = MessageBuilder.buildResponse(encrypted.get(0));
+			resp = ServerMessageBuilder.buildResponse(encrypted.get(0));
 			break;
 
 
@@ -48,7 +49,7 @@ public class ServerSideMessageHandler implements MessageHandler {
 				System.err.println("Send Completed");
 				System.exit(-1);
 			}
-			resp = MessageBuilder.buildResponse(encrypted.get(index++));
+			resp = ServerMessageBuilder.buildResponse(encrypted.get(index++));
 			
 			break;
 
@@ -80,7 +81,7 @@ public class ServerSideMessageHandler implements MessageHandler {
 						System.err.println("Contents does not exists");
 						System.exit(-1);
 					}
-					resp = MessageBuilder.buildResponse(encrypted.get(index++));
+					resp = ServerMessageBuilder.buildResponse(encrypted.get(index++));
 					
 							
 				} else {

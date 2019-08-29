@@ -1,16 +1,14 @@
-package com.lgcns.test.net.server;
+package com.lgcns.test.net.client;
 
-public enum MessageEnum {
-  FILE("FILE", false),
+public enum ClientMessageEnum {
   ACK("ACK", false),
   ERR("ERR", false),
-  NUMBER("NUMBER", false),
-  RESPONSE("RESPONSE", false);
+  NUMBER("NUMBER", false);
 
   private String command;
   private boolean broadcast;
 
-  MessageEnum(String cmd, boolean broadcast) {
+  ClientMessageEnum(String cmd, boolean broadcast) {
     this.command = cmd;
     this.broadcast = broadcast;
   }
@@ -23,8 +21,8 @@ public enum MessageEnum {
     return this.broadcast;
   }
 
-  public static ServerMessageEnum getEnum(String value) {
-    for(ServerMessageEnum v : ServerMessageEnum.values())
+  public static ClientMessageEnum getEnum(String value) {
+    for(ClientMessageEnum v : ClientMessageEnum.values())
       if(v.getCommandString().equalsIgnoreCase(value)) return v;
 
       throw new IllegalArgumentException();

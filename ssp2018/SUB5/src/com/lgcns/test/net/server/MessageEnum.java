@@ -24,8 +24,8 @@ public enum MessageEnum {
     return this.broadcast;
   }
 
-  public static MessageEnum getEnum(String value) {
-    for(MessageEnum v : MessageEnum.values())
+  public static ServerMessageEnum getEnum(String value) {
+    for(ServerMessageEnum v : ServerMessageEnum.values())
       if(v.getCommandString().equalsIgnoreCase(value)) return v;
 
       throw new IllegalArgumentException();

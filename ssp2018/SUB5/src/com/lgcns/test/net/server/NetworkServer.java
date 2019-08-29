@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.lgcns.test.net.message.MessageHandler;
+
 public class NetworkServer {
 	private static final int PORT = 9876;
 
@@ -14,7 +16,7 @@ public class NetworkServer {
 
 	public NetworkServer() {
 		try {
-			messageHandler = new ServerSideMessageHandler();
+			messageHandler = new ServerMessageHandler();
 			server = new ServerSocket(PORT);
 			server.setReuseAddress(true);
 		} catch (IOException e) {

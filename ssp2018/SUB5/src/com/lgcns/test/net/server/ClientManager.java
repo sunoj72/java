@@ -25,7 +25,7 @@ public class ClientManager implements Runnable {
                 if((in.read(b)) > 0)
                 {
     				String line = new String(b);
-    				Message msg = MessageBuilder.buildRequest(line.trim());
+    				ServerMessage msg = ServerMessageBuilder.buildRequest(line.trim());
     				this.processMessage(msg);
                 }
 				
@@ -39,9 +39,9 @@ public class ClientManager implements Runnable {
 		}
 	}
 
-	public synchronized void processMessage(Message req) throws IOException {
+	public synchronized void processMessage(ServerMessage req) throws IOException {
 		if (!client.isClosed()) {
-			Message resp = server.getMessageHadler().processMessage(req);
+			ServerMessage resp = server.getMessageHadler().processMessage(req);
 
 			if (req.getCommand().isBroadcast()) {
 				sendMessageToAll(resp);
@@ -51,7 +51,7 @@ public class ClientManager implements Runnable {
 		}
 	}
 	
-	public synchronized void sendMessage(Socket client, Message msg) throws IOException {
+	public synchronized void sendMessage(Socket client, ServerMessage msg) throws IOException {
 		if (!client.isClosed()) {
 			PrintWriter pw = new PrintWriter(client.getOutputStream());
 			pw.print(msg);
@@ -61,11 +61,11 @@ public class ClientManager implements Runnable {
 		}
 	}
 
-	public synchronized void sendMessage(Message msg) throws IOException {
+	public synchronized void sendMessage(ServerMessage msg) throws IOException {
 		sendMessage(this.client, msg);
 	}
 
-	public synchronized void sendMessageToAll(Message msg) {
+	public synchronized void sendMessageToAll(ServerMessage msg) {
 		for (Iterator<Socket> it = server.getClients().iterator(); it.hasNext();) {
 			try {
 				Socket client = it.next();

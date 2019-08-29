@@ -3,19 +3,19 @@ package com.lgcns.test.net.server;
 public class Message {
   public static final String TOKEN_SEPARATOR = "#";
 
-  private MessageEnum command;
+  private ServerMessageEnum command;
   private String messageBody;
 
-  public Message(MessageEnum cmd, String messageBody) {
+  public Message(ServerMessageEnum cmd, String messageBody) {
     this.command = cmd;
     this.messageBody = messageBody;
   }
 
-  public MessageEnum getCommand() {
+  public ServerMessageEnum getCommand() {
     return this.command;
   }
 
-  public void setCommand(MessageEnum cmd) {
+  public void setCommand(ServerMessageEnum cmd) {
     this.command = cmd;
   }
 

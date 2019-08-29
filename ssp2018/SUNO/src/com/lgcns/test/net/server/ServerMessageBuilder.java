@@ -1,6 +1,6 @@
 package com.lgcns.test.net.server;
 
-public class MessageBuilder {
+public class ServerMessageBuilder {
   public static ServerMessage buildRequest(String msg) {
     if (msg == null || msg.length() == 0) {
       return null;

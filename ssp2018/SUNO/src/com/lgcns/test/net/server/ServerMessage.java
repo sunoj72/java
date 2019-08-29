@@ -1,18 +1,20 @@
 package com.lgcns.test.net.server;
 
-public class Message {
+import com.lgcns.test.net.message.Message;
+
+public class ServerMessage implements Message {
   public static final String TOKEN_SEPARATOR = "#";
 
   private ServerMessageEnum command;
   private String messageBody;
   private String cryptKey;
 
-  public Message(ServerMessageEnum cmd, String messageBody) {
+  public ServerMessage(ServerMessageEnum cmd, String messageBody) {
     this.command = cmd;
     this.messageBody = messageBody;
   }
 
-  public Message(ServerMessageEnum cmd, String messageBody, String cryptKey) {
+  public ServerMessage(ServerMessageEnum cmd, String messageBody, String cryptKey) {
 	    this.command = cmd;
 	    this.messageBody = messageBody;
 	    this.cryptKey = cryptKey;

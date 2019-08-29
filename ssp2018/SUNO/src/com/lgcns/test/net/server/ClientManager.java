@@ -41,7 +41,7 @@ public class ClientManager implements Runnable {
 
 	public synchronized void processMessage(ServerMessage req) throws IOException {
 		if (!client.isClosed()) {
-			ServerMessage resp = server.getMessageHadler().processMessage(req);
+			ServerMessage resp = (ServerMessage)server.getMessageHadler().processMessage(req);
 
 			if (req.getCommand().isBroadcast()) {
 				sendMessageToAll(resp);

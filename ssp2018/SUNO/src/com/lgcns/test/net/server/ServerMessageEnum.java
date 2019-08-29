@@ -1,7 +1,8 @@
 package com.lgcns.test.net.server;
 
-public enum MessageEnum {
+public enum ServerMessageEnum {
   FILE("FILE", false),
+  FILE2("FILE2", false),
   ACK("ACK", false),
   ERR("ERR", false),
   NUMBER("NUMBER", false),
@@ -10,7 +11,7 @@ public enum MessageEnum {
   private String command;
   private boolean broadcast;
 
-  MessageEnum(String cmd, boolean broadcast) {
+  ServerMessageEnum(String cmd, boolean broadcast) {
     this.command = cmd;
     this.broadcast = broadcast;
   }

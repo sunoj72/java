@@ -1,54 +1,54 @@
 package com.lgcns.test.net.server;
 
 public class MessageBuilder {
-  public static Message buildRequest(String msg) {
+  public static ServerMessage buildRequest(String msg) {
     if (msg == null || msg.length() == 0) {
       return null;
     }
 
-      MessageEnum cmd =  null;
+      ServerMessageEnum cmd =  null;
       
       try {
 //          String[] tokens = tokenize(msg);
 //          MessageEnum cmd =  MessageEnum.getEnum(tokens[0]);
 
     	  Integer.parseInt(msg);
-    	  cmd = MessageEnum.NUMBER;
+    	  cmd = ServerMessageEnum.NUMBER;
     	  
       } catch (NumberFormatException e) {
           if (msg.equals("ACK") || msg.equals("ERR")) {
-              cmd =  MessageEnum.getEnum(msg);
+              cmd =  ServerMessageEnum.getEnum(msg);
           } else {
-        	  cmd = MessageEnum.FILE;
+        	  cmd = ServerMessageEnum.FILE;
           }
       }
       
-      return new Message(cmd, msg);
+      return new ServerMessage(cmd, msg);
   }
 
-  public static Message buildResponse(String msg) {
+  public static ServerMessage buildResponse(String msg) {
 	    if (msg == null || msg.length() == 0) {
 	      return null;
 	    }
 
-	      MessageEnum cmd =  null;
+	      ServerMessageEnum cmd =  null;
 	      
 	      try {
 //	          String[] tokens = tokenize(msg);
 //	          MessageEnum cmd =  MessageEnum.getEnum(tokens[0]);
 
 	    	  Integer.parseInt(msg);
-	    	  cmd = MessageEnum.NUMBER;
+	    	  cmd = ServerMessageEnum.NUMBER;
 	    	  
 	      } catch (NumberFormatException e) {
 	          if (msg.equals("ACK") || msg.equals("ERR")) {
-	              cmd =  MessageEnum.getEnum(msg);
+	              cmd =  ServerMessageEnum.getEnum(msg);
 	          } else {
-	        	  cmd = MessageEnum.FILE;
+	        	  cmd = ServerMessageEnum.FILE;
 	          }
 	      }
 	      
-	      return new Message(cmd, msg);
+	      return new ServerMessage(cmd, msg);
 	  }
   
 //

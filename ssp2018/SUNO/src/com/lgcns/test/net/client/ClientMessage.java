@@ -1,29 +1,32 @@
-package com.lgcns.test.net.server;
+package com.lgcns.test.net.client;
 
-public class Message {
+import com.lgcns.test.net.message.Message;
+import com.lgcns.test.net.client.ClientMessageEnum;
+
+public class ClientMessage implements Message {
   public static final String TOKEN_SEPARATOR = "#";
 
-  private ServerMessageEnum command;
+  private ClientMessageEnum command;
   private String messageBody;
   private String cryptKey;
 
-  public Message(ServerMessageEnum cmd, String messageBody) {
+  public ClientMessage(ClientMessageEnum cmd, String messageBody) {
     this.command = cmd;
     this.messageBody = messageBody;
   }
 
-  public Message(ServerMessageEnum cmd, String messageBody, String cryptKey) {
+  public ClientMessage(ClientMessageEnum cmd, String messageBody, String cryptKey) {
 	    this.command = cmd;
 	    this.messageBody = messageBody;
 	    this.cryptKey = cryptKey;
 	  }
   
   
-  public ServerMessageEnum getCommand() {
+  public ClientMessageEnum getCommand() {
     return this.command;
   }
 
-  public void setCommand(ServerMessageEnum cmd) {
+  public void setCommand(ClientMessageEnum cmd) {
     this.command = cmd;
   }
 
