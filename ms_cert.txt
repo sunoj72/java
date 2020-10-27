@@ -1,0 +1,12 @@
+추가 공부 자료
+• Microsoft Learn: https://docs.microsoft.com/ko-kr/learn/?ocid=AID3001216
+• Azure 기본 과정 온라인 https://docs.microsoft.com/ko-kr/learn/paths/azure-fundamentals/
+• Azure 기본 과정 랩 http://github.com/MicrosoftLearningKoreanLab/AZ-900TKR-MicrosoftAzureFundamentals/
+• AZ-900 자격증 시험관련 안내 https://www.microsoft.com/ko-kr/learning/certification-exam-policies.aspx
+• AZ-900 실습 참고 페이지: https://github.com/MicrosoftLearningKoreanLab/AZ-900TKR-MicrosoftAzureFundamentals
+• 온라인 과정 : https://aka.ms/azfund
+• Lab주소
+> https://github.com/MicrosoftLearningKoreanLab
+> https://github.com/MicrosoftLearning
+• 시험 덤프 : https://www.examtopics.com/exams/microsoft/az-900/view/
+• 시험 후기 : https://m.blog.naver.com/yyk_1002/221985222532
