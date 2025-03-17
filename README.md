@@ -1,2 +1,1 @@
 TEST
-https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.cohere.com%2Fdocs%2Fnorth-eap-private-deployments&data=05%7C02%7Csunoj%40lgcns.com%7C6565e22123e0441d6dcf08dd629a93fb%7Cfab2d60fe6144f9db2ad9fb1397f2efe%7C0%7C0%7C638775138219526909%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=7bVIMVYGvtqu0M0BwFNak8I%2FP2faIOEz6IF18CiQpbY%3D&reserved=0
